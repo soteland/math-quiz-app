@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ConfettiExplosion from 'react-confetti-explosion';
 
 function App() {
+  const [answers, setAnswers] = useState<string[]>([])
   const [score, setScore] = useState(0)
 
   const [scoreStreak, setScoreStreak] = useState(0)
@@ -32,16 +33,18 @@ function App() {
       setIsExploding(true);
       setScore(score + 1)
       if (score > scoreStreak) setScoreStreak(score + 1)
+      setAnswers(a => [...a, `${num1} + ${num2} = ${correctAnswer}`])
     } else {
       setMessage('Feil :(');
       setScore(0)
+      setAnswers(a => [`${num1} + ${num2} = ${answer} (Feil!) Korrekt: ${correctAnswer}`, ...a])
     }
-    setAnswer('');
     setNum1(generateRandomNumber2(lowerBound, upperBound));
     setNum2(generateRandomNumber2(lowerBound, upperBound));
     setTimeout(() => {
       setIsExploding(false);
     }, 2000);
+    setAnswer('');
   }
 
   const [isExploding, setIsExploding] = React.useState(false);
@@ -84,16 +87,16 @@ function App() {
               required
               className="border border-gray-400 p-2 rounded mr-2 text-3xl w-24"
             />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+            <button type="submit" className="bg-blue-500 text-white p-2 text-3xl rounded">
               Svar
             </button>
             {isExploding && <ConfettiExplosion />}
           </form>
-          <div>
+          {/* <div>
             <button type="submit" className="bg-blue-500 text-white p-2 rounded">
               Svar
             </button>
-          </div>
+          </div> */}
           <p className="text-xl">{message}</p>
         </header>
       </div>
@@ -103,6 +106,12 @@ function App() {
         </div>
         <div>
           <strong>Maks rette på rad: {scoreStreak}</strong>
+        </div>
+      </div>
+      <div className='border-2 border-gray-500 p-4 rounded-lg flex flex-col'>
+        <div>
+          Svarhistorikk:
+          {answers.map((a, i) => <div key={i}>{a}</div>)}
         </div>
       </div>
     </div>
