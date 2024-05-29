@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ConfettiExplosion from 'react-confetti-explosion';
 
 function App() {
-  const [num1, setNum1] = useState(generateRandomNumber());
-  const [num2, setNum2] = useState(generateRandomNumber());
+  const [num1, setNum1] = useState(generateRandomNumber2(1, 40));
+  const [num2, setNum2] = useState(generateRandomNumber2(1, 40));
   const [answer, setAnswer] = useState('');
   const [message, setMessage] = useState('');
 
@@ -11,8 +11,8 @@ function App() {
   const [upperBound, setUpperBound] = useState(100);
 
   useEffect(() => {
-    setNum1(generateRandomNumber());
-    setNum2(generateRandomNumber());
+    setNum1(generateRandomNumber2(1, 40));
+    setNum2(generateRandomNumber2(1, 40));
   }, [lowerBound, upperBound]);
 
   function generateRandomNumber() {
@@ -33,8 +33,8 @@ function App() {
       setMessage('Feil :(');
     }
     setAnswer('');
-    setNum1(generateRandomNumber());
-    setNum2(generateRandomNumber());
+    setNum1(generateRandomNumber2(1, 40));
+    setNum2(generateRandomNumber2(1, 40));
     setTimeout(() => {
       setIsExploding(false);
     }, 2000);
@@ -52,14 +52,14 @@ function App() {
             <input
               type="number"
               value={lowerBound}
-              onChange={(e) => setLowerBound(e.target.value)}
+              onChange={(e) => setLowerBound(parseInt(e.target.value))}
               required
               className="border border-gray-400 p-1 rounded mr-2"
             />
             <input
               type="number"
               value={upperBound}
-              onChange={(e) => setUpperBound(e.target.value)}
+              onChange={(e) => setUpperBound(parseInt(e.target.value))}
               required
               className="border border-gray-400 p-1 rounded mr-2"
             />
