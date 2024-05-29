@@ -20,10 +20,6 @@ function App() {
     setNum2(generateRandomNumber2(lowerBound, upperBound));
   }, [lowerBound, upperBound]);
 
-  function generateRandomNumber() {
-    return Math.floor(Math.random() * 100) + 1;
-  }
-
   function generateRandomNumber2(a: number, b: number) {
     return Math.floor(Math.random() * (b - a + 1)) + a;
   }
@@ -93,6 +89,11 @@ function App() {
             </button>
             {isExploding && <ConfettiExplosion />}
           </form>
+          <div>
+            <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+              Svar
+            </button>
+          </div>
           <p className="text-xl">{message}</p>
         </header>
       </div>
