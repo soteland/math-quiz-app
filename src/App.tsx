@@ -47,11 +47,13 @@ function App() {
     setAnswer('');
   }
 
+  const numpad = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
   const [isExploding, setIsExploding] = React.useState(false);
 
   return (
 
-    <div className="bg-gray-800 text-white min-h-screen flex gap-2 flex-col items-center justify-center">
+    <div className="bg-gray-800 text-white min-h-screen flex gap-2 flex-col items-center justify-center text-lg">
       <div className='border-2 border-gray-500 p-6 rounded-lg'>
         <header className="text-center flex gap-4 flex-col">
           <h1 className="text-4xl font-bold mb-4">Super-Matte</h1>
@@ -87,16 +89,38 @@ function App() {
               required
               className="border border-gray-400 p-2 rounded mr-2 text-3xl w-24"
             />
-            <button type="submit" className="bg-blue-500 text-white p-2 text-3xl rounded">
+            <button type="submit" className="bg-blue-500 text-white p-2 text-2xl rounded">
               Svar
             </button>
             {isExploding && <ConfettiExplosion />}
           </form>
-          {/* <div>
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-              Svar
-            </button>
-          </div> */}
+          <div className='lg:hidden'>
+
+            <div className='grid grid-cols-3 gap-2'>
+              {numpad.map(number => {
+                return (
+                  <button
+                    type="button"
+                    className="bg-blue-500 text-white p-2 rounded"
+                    onClick={(e: any) => setAnswer(a => a + number)}
+                  >
+                    {number}
+                  </button>
+                )
+              })}
+            </div>
+            <div className='grid grid-cols-2 gap-2 mt-2'>
+              <button type="button" className="bg-blue-500 text-white p-2 rounded"
+                onClick={(e: any) => setAnswer(a => a + "0")}
+              >
+                0
+              </button>
+              <button type="submit" className="bg-blue-500 text-white p-2 rounded"
+                onClick={handleSubmit}>
+                Enter
+              </button>
+            </div>
+          </div>
           <p className="text-xl">{message}</p>
         </header>
       </div>
