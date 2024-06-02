@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ConfettiExplosion from 'react-confetti-explosion';
+import { Button } from './Button';
 
-function App() {
+export function Matte1() {
   const [answers, setAnswers] = useState<string[]>([])
   const [score, setScore] = useState(0)
 
@@ -89,9 +90,11 @@ function App() {
               required
               className="border border-gray-400 p-2 rounded mr-2 text-3xl w-24"
             />
-            <button type="submit" className="bg-blue-500 text-white p-2 text-2xl rounded">
+            <Button
+              type="submit"
+            >
               Svar
-            </button>
+            </Button>
             {isExploding && <ConfettiExplosion />}
           </form>
           <div className='lg:hidden'>
@@ -99,26 +102,25 @@ function App() {
             <div className='grid grid-cols-3 gap-2'>
               {numpad.map(number => {
                 return (
-                  <button
+                  <Button
                     type="button"
-                    className="bg-blue-500 text-white p-2 rounded"
                     onClick={(e: any) => setAnswer(a => a + number)}
                   >
                     {number}
-                  </button>
+                  </Button>
                 )
               })}
             </div>
             <div className='grid grid-cols-2 gap-2 mt-2'>
-              <button type="button" className="bg-blue-500 text-white p-2 rounded"
+              <Button type="button"
                 onClick={(e: any) => setAnswer(a => a + "0")}
               >
                 0
-              </button>
-              <button type="submit" className="bg-blue-500 text-white p-2 rounded"
+              </Button>
+              <Button type="submit"
                 onClick={handleSubmit}>
                 Enter
-              </button>
+              </Button>
             </div>
           </div>
           <p className="text-xl">{message}</p>
@@ -141,5 +143,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
