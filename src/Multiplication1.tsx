@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from './Button';
+import { ProgressBar } from './ProgressBar';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const generateMultiplications = () => {
     const multiplications = [];
@@ -11,11 +13,19 @@ const generateMultiplications = () => {
     return multiplications.sort(() => Math.random() - 0.5); // Shuffle array
 };
 
+
+
 export const Multiplication1 = () => {
     const [multiplications, setMultiplications] = useState(generateMultiplications());
     const [inputValue, setInputValue] = useState('');
     const [currentMultiplication, setCurrentMultiplication] = useState(multiplications[0]);
     const [completed, setCompleted] = useState<any>({});
+
+
+    const [answerInfo, setAnswerInfo] = useState('');
+
+
+    const [isExploding, setIsExploding] = React.useState(false);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -30,16 +40,18 @@ export const Multiplication1 = () => {
             if (nextMultiplications.length > 0) {
                 setCurrentMultiplication(nextMultiplications[0]);
             }
+            setAnswerInfo("Nice! Riktig svar! 🎉")
             setInputValue('');
         } else {
-            alert('Try again!');
+            setAnswerInfo("Feil svar! Prøv igjen.")
             setInputValue('');
         }
     };
 
     return (
-        <div className='text-center'>
+        <div className='text-center max-w-[500px] mx-auto'>
             <h1>Gangetabellen</h1>
+            <br></br>
             <table className='mx-auto' style={{
                 borderCollapse: 'collapse'
             }}>
@@ -57,7 +69,7 @@ export const Multiplication1 = () => {
                                 {Array.from({ length: 10 }, (_, colIndex) => {
                                     const key = `${rowIndex + 1},${colIndex + 1}`;
                                     return (
-                                        <td className='h-10 w-10 border border-gray-400 text-center'
+                                        <td className='h-10 w-10 border border-gray-400 text-center text-neutral-700 font-bold'
                                             key={colIndex}
                                             style={{
                                                 backgroundColor: completed[key] ? 'lightgreen' : 'white',
@@ -75,11 +87,13 @@ export const Multiplication1 = () => {
             {
                 multiplications.length > 0 ? (
                     <form onSubmit={handleSubmit}>
-                        <p>
-                            What is {currentMultiplication.i} x {currentMultiplication.j}?
+                        <br></br>
+                        <p className='text-xl'>
+                            Hva er {currentMultiplication.i} x {currentMultiplication.j}?
                         </p>
+                        <br></br>
                         <input
-
+                            autoFocus
                             className="border border-gray-400 p-2 rounded mr-2 text-3xl w-24"
                             type="number"
                             value={inputValue}
@@ -88,11 +102,18 @@ export const Multiplication1 = () => {
                         />
                         <Button type="submit">
                             Svar</Button>
+
+                        <p>{answerInfo}</p>
                     </form>
                 ) : (
-                    <p>Congratulations! You have completed the multiplication table.</p>
+                    <p>GRATULERER! Du klarte hele gangetabellen!
+                        {isExploding && <ConfettiExplosion />}</p>
                 )
             }
+            <br></br>
+            <br></br>
+            Hvor langt har du kommet?
+            <ProgressBar progress={100 - multiplications.length} />
         </div >
     );
 };
